@@ -2,10 +2,10 @@
 ## Introduction
 
 ### Who are we
-- team-member-name (github-username)
-- team-member-name (github-username)
-- team-member-name (github-username)
-- team-member-name (github-username)
+- James 0' Hara (jamesOH18)
+- Ben Stynes (BenStynes)
+- Rennick, Ethan (EthanRennick)
+- Kiernen Irons (KiernenIrons)
 
 ### What is the purpose of this document
 ### Why are we doing this project
