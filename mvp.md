@@ -14,11 +14,6 @@ The simplest version of this game that we can create will still be fairly compli
 - Switch turns to player Two
 - If player two has available turns, allow him to do the previous steps, or else the game ends
 
-## Out Of Scope
-
-Explicity describe what is not part of MVP
-
-
 ## List of stories needed to complete the MVP `aim for 8 stories`
 
 1. `Create Board` Create the board which contains the game data
