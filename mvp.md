@@ -54,7 +54,7 @@ To determine if a victory is achieved or not, we will need an algorithm to test 
 
 10. 'Display Data'
 
-It is important for us to display all important information that the player should know. This is information such as Possible Moves, who's turn it is and who has won. it will also tell the player which buttons to press for movement and how to restart the the game. also will display which button to press to skip coin movement phase.
+It is important for us to display all important information that the player should know. This is information such as Possible Moves, who's turn it is and who has won. it will also tell the player which buttons to press for movement and how to restart the the game.it also will display which button to press to skip coin movement phase.
 
 11. 'Game Restart'
 
