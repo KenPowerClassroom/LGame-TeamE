@@ -52,7 +52,7 @@ Our turn switch will allow the game to played by two people. The game will switc
 
 To determine if a victory is achieved or not, we will need an algorithm to test whether there are spaces suitable for the other player to move into. We have devised a formula containing three for loops which will navigate the board's data and determine if there are any spots that the other player can move his tetromino into. If he cannot move his piece, the turn will end and the player will achieve victory, ending the game.
 
-10. 'Display Data'
+10. 'Display Text'
 
 It is important for us to display all important information that the player should know. This is information such as Possible Moves, who's turn it is and who has won. it will also tell the player which buttons to press for movement and how to restart the the game.it also will display which button to press to skip coin movement phase.
 
