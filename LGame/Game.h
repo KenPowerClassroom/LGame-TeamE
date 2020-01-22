@@ -6,6 +6,7 @@
 /// Don't forget the endif at the bottom
 /// </summary>
 #include <SFML/Graphics.hpp>
+#include "Cell.h"
 
 class Game
 {
@@ -23,6 +24,8 @@ private:
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
+	void setupGrid();
+
 
 	void setupFontAndText();
 
@@ -32,6 +35,18 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
+
+	//grid setup
+	static const int numRows = 4;
+	static const int numCols = 4;
+	const int cellSize = 100;
+	const int MAX_CELLS = 16;
+
+	Cell grid[numRows][numCols]; //2d array to create the maze
+	int data[numRows][numCols] = { 0 };
+	
+	sf::RectangleShape block;
+
 
 };
 

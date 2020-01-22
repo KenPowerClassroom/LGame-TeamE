@@ -13,6 +13,8 @@ Game::Game() :
 	m_exitGame{ false } //when true game will exit
 {
 	setupFontAndText(); // load font 
+	block.setSize(sf::Vector2f(cellSize, cellSize));
+	setupGrid();
 }
 
 /// <summary>
@@ -102,10 +104,15 @@ void Game::update(sf::Time t_deltaTime)
 /// </summary>
 void Game::render()
 {
-	m_window.clear(sf::Color::White);
+	m_window.clear(sf::Color::Black);
 	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
-	m_window.display();
+	for (int row = 0; row < numRows; row++)
+	{
+		for (int col = 0; col < numCols; col++)
+		{
+			m_window.draw(grid[row][col].getBox());
+		}
+	}	m_window.display();
 }
 
 /// <summary>
@@ -118,7 +125,7 @@ void Game::setupFontAndText()
 		std::cout << "problem loading arial black font" << std::endl;
 	}
 	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
+	m_welcomeMessage.setString("");
 	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
 	m_welcomeMessage.setPosition(40.0f, 40.0f);
 	m_welcomeMessage.setCharacterSize(80U);
@@ -126,4 +133,45 @@ void Game::setupFontAndText()
 	m_welcomeMessage.setFillColor(sf::Color::Black);
 	m_welcomeMessage.setOutlineThickness(3.0f);
 
+}
+
+
+void Game::setupGrid()
+// Initialize the game objects to play a new game
+{
+	//level data (local)
+	int levelData[numRows][numCols] = {
+		{1,2,2,0},
+		{0,2,3,0},
+		{0,2,3,0},
+		{0,3,3,1},
+
+	};
+
+	for (int row = 0; row < numRows; row++)
+	{
+		for (int col = 0; col < numCols; col++)
+		{
+			grid[row][col].typeOfCellData = levelData[row][col];
+			grid[row][col].box.setSize(sf::Vector2f(100, 100));
+			if (levelData[row][col] == 0)
+			{
+				grid[row][col].box.setFillColor(sf::Color::White);
+			}
+			if (levelData[row][col] == 1)
+			{
+				grid[row][col].box.setFillColor(sf::Color::Yellow);
+			}
+			if (levelData[row][col] == 2)
+			{
+				grid[row][col].box.setFillColor(sf::Color::Blue);
+			}
+			if (levelData[row][col] == 3)
+			{
+				grid[row][col].box.setFillColor(sf::Color::Red);
+			}
+
+			grid[row][col].box.setPosition(sf::Vector2f{ (float)col * 100, (float)row * 100 });
+		}
+	}
 }
