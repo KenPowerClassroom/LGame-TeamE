@@ -112,7 +112,8 @@ void Game::render()
 		{
 			m_window.draw(grid[row][col].getBox());
 		}
-	}	m_window.display();
+	}	
+	m_window.display();
 }
 
 /// <summary>
@@ -152,26 +153,10 @@ void Game::setupGrid()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
-			grid[row][col].typeOfCellData = levelData[row][col];
-			grid[row][col].box.setSize(sf::Vector2f(100, 100));
-			if (levelData[row][col] == 0)
-			{
-				grid[row][col].box.setFillColor(sf::Color::White);
-			}
-			if (levelData[row][col] == 1)
-			{
-				grid[row][col].box.setFillColor(sf::Color::Yellow);
-			}
-			if (levelData[row][col] == 2)
-			{
-				grid[row][col].box.setFillColor(sf::Color::Blue);
-			}
-			if (levelData[row][col] == 3)
-			{
-				grid[row][col].box.setFillColor(sf::Color::Red);
-			}
-
-			grid[row][col].box.setPosition(sf::Vector2f{ (float)col * 100, (float)row * 100 });
+			//sets up the cell data and tells it to set itself up
+			grid[row][col].setDataType(levelData[col][row]);
+			grid[row][col].setBoardPosition(row, col);
+			grid[row][col].setup();
 		}
 	}
 }
