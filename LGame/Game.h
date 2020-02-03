@@ -26,9 +26,10 @@ private:
 	void render();
 	void setupGrid();
 	void changeGridData(int t_col, int t_row);
-	
-
+     bool validateMovement();
+	 void clearCurrent();
 	void setupFontAndText();
+	
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -42,13 +43,13 @@ private:
 	static const int numCols = 4;
 	const int cellSize = 100;
 	const int MAX_CELLS = 16;
-
+	int maxPlayernum =0;
 	Cell grid[numRows][numCols]; //2d array to create the maze
 	int data[numRows][numCols] = { 0 };
-	
+	int currentPLayernum = 3;
 	sf::RectangleShape block;
 
-
+	void tempCheck();
 };
 
 #endif // !GAME_HPP
