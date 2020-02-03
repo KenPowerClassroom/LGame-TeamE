@@ -70,6 +70,19 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (sf::Event::MouseButtonPressed == newEvent.type)
+		{
+			if (sf::Mouse::Left == newEvent.mouseButton.button)
+			{
+
+				if (newEvent.mouseButton.x < 400)
+				{
+
+					changeGridData(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+
+				}
+			}
+		}
 	}
 }
 
@@ -154,9 +167,18 @@ void Game::setupGrid()
 		for (int col = 0; col < numCols; col++)
 		{
 			//sets up the cell data and tells it to set itself up
-			grid[row][col].setDataType(levelData[col][row]);
-			grid[row][col].setBoardPosition(row, col);
+			grid[row][col].setDataType(levelData[row][col]);
+			grid[row][col].setBoardPosition(col, row);
 			grid[row][col].setup();
 		}
 	}
 }
+
+void Game::changeGridData(int t_col, int t_row)
+{
+
+				grid[t_row][t_col].setDataType(2);
+				grid[t_row][t_col].setup();
+	
+}
+

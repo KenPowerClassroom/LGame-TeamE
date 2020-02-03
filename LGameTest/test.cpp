@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "..//LGame/Cell.h"
 
+
 #ifdef _DEBUG 
 #pragma comment(lib,"sfml-graphics-d.lib") 
 #pragma comment(lib,"sfml-audio-d.lib") 
@@ -44,6 +45,7 @@ TEST(TestCaseName, TestName) {
 			EXPECT_EQ(help[row][col].getBox().getPosition().y, col * 100);
 		}
 	}
+	
 
 	EXPECT_EQ(help[0][0].typeOfCell(), 1);
 	EXPECT_EQ(help[0][1].typeOfCell(), 0);
@@ -72,6 +74,37 @@ TEST(TestCaseName, TestName) {
 
 	//EXPECT_EQ(help[0][0].getBox().getPosition().x, 0);
 
-  //EXPECT_TRUE(true);
+    //EXPECT_TRUE(true);
+	
 }
 
+TEST(MouseClick, ColourChanged)
+{
+	int levelData[4][4] = {
+		{1,2,2,0},
+		{0,2,3,0},
+		{0,2,3,0},
+		{0,3,3,1},
+	};
+	bool mouseTest = false;
+	bool clickedOn = true;
+	Cell help[4][4];
+
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 4; col++)
+		{
+			//sets up the cell data and tells it to set itself up
+			help[row][col].setDataType(levelData[col][row]);
+			help[row][col].setBoardPosition(row, col);
+			help[row][col].setup();
+		}
+	}
+	if (clickedOn)
+	{
+		help[0][0].setDataType(2);
+		help[0][0].setup();
+	}
+	EXPECT_EQ(help[0][0].typeOfCell(), 2);
+	EXPECT_EQ(help[0][0].getBox().getFillColor(), sf::Color::Blue);
+}

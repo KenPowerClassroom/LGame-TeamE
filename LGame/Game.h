@@ -25,7 +25,8 @@ private:
 	void update(sf::Time t_deltaTime);
 	void render();
 	void setupGrid();
-
+	void changeGridData(int t_col, int t_row);
+	
 
 	void setupFontAndText();
 
@@ -35,7 +36,7 @@ private:
 	sf::Texture m_logoTexture; // texture used for sfml logo
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
-
+	bool m_clickedOver;
 	//grid setup
 	static const int numRows = 4;
 	static const int numCols = 4;
