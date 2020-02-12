@@ -74,9 +74,9 @@ void Game::processEvents()
 		{
 			if (sf::Mouse::Left == newEvent.mouseButton.button)
 			{
-				clearCurrent();
 				
-					if (newEvent.mouseButton.x < 400 && (grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x/ 100].typeOfCell() ==(2) || grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0)))
+				
+					if (newEvent.mouseButton.x < 400 &&  grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0))
 					{
 						if (validateMovement())
 						{
@@ -86,6 +86,11 @@ void Game::processEvents()
 					}
 				
 			}
+			if (sf::Mouse::Right == newEvent.mouseButton.button)
+			{
+				clearCurrent();
+			}
+
 		}
 	}
 }
@@ -212,27 +217,26 @@ bool Game::validateMovement()
 			else
 			{
 				return false;
-				currentPLayernum = 3;
-				maxPlayernum = 0;
+				
 			}
-			if (!(grid[row + 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 || grid[row- 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2))
+			if ((grid[row + 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 || grid[row- 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2))
 			{
-				return false;
-			}
-
-			if (!(grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row- 1][col + 2].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row+ 1][col + 2].typeOfCell() == 2))
-			{
-				return false;
+				return true;
 			}
 
-			if (!(grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col + 1].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row- 1][col + 2].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row+ 1][col + 2].typeOfCell() == 2))
 			{
-				return false;
+				return true;
 			}
 
-			if (!(grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col + 1].typeOfCell() == 2))
 			{
-				return false;
+				return true;
+			}
+
+			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2))
+			{
+				return true;
 			}
 		}
 	}
@@ -259,6 +263,7 @@ void Game::clearCurrent()
 		}
 	}
 	
-
+	currentPLayernum = 3;
+	maxPlayernum = 0;
 }
 
