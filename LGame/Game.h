@@ -43,13 +43,16 @@ private:
 	static const int numCols = 4;
 	const int cellSize = 100;
 	const int MAX_CELLS = 16;
-	int maxPlayernum =0;
+	int maxPlayernum =4;
 	Cell grid[numRows][numCols]; //2d array to create the maze
 	int data[numRows][numCols] = { 0 };
 	int currentPLayernum = 3;
+	int m_player = 2;
 	sf::RectangleShape block;
 
-	void tempCheck();
+	bool numberCheck();
+	sf::Text m_turnythingy;
+
 };
 
 #endif // !GAME_HPP

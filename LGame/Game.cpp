@@ -76,12 +76,28 @@ void Game::processEvents()
 			{
 				
 				
-					if (newEvent.mouseButton.x < 400 &&  grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0))
+					if (newEvent.mouseButton.x < 400 && (grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0)))
 					{
-						if (validateMovement())
+						if (numberCheck())
 						{
 
 							changeGridData(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+
+							if (validateMovement())
+							{
+								m_turnythingy.setString("Valid Move switching turns!");
+								std::cout << "Valid you invalid" << std::endl;
+
+							}
+							else 
+							{
+								if (maxPlayernum == 4)
+								{
+									m_turnythingy.setString("Invalid ! right click to reset");
+									std::cout << "Invalid ! right click to reset" << std::endl;
+									m_player = 1;
+								}
+							}
 						}
 					}
 				
@@ -114,7 +130,7 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	tempCheck();
+	
 	if (m_exitGame)
 	{
 		m_window.close();
@@ -159,16 +175,21 @@ void Game::setupFontAndText()
 
 }
 
-void Game::tempCheck()
+bool Game::numberCheck()
 {
-	for (int i = 0; i < 4; i++)
+	if (maxPlayernum < 4)
 	{
-		for (int j = 0; j < 4; j++)
-		{
-			
-		}
+		maxPlayernum++;
+		return true;
+	}
+	else
+	{
+		return false;
+
 	}
 }
+
+
 
 
 void Game::setupGrid()
@@ -207,42 +228,75 @@ bool Game::validateMovement()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
+
+			//its somewhat worken
 			
-			//sets up the cell data and tells it to set itself up
-			if (maxPlayernum < 4)
+			if ((grid[row + 1][col].typeOfCell() == 2 &&
+				grid[row][col].typeOfCell() == 2 &&
+				grid[row][col + 1].typeOfCell() == 2 &&
+				grid[row][col + 2].typeOfCell() == 2))
 			{
-				maxPlayernum++;
-				return true;
-			}
-			else
-			{
-				return false;
+			
 				
+					return true; //fuck no
 			}
-			if ((grid[row + 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 || grid[row- 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2))
+			if (grid[row - 1][col].typeOfCell() == 2 &&
+				grid[row][col].typeOfCell() == 2 &&
+				grid[row][col + 1].typeOfCell() == 2 &&
+				grid[row][col + 2].typeOfCell() == 2)
 			{
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row- 1][col + 2].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row+ 1][col + 2].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == 2 &&
+				grid[row][col + 1].typeOfCell() == 2 &&
+				grid[row][col + 2].typeOfCell() == 2 &&
+				grid[row - 1][col + 2].typeOfCell() == 2))
+
+			{
+				return true;
+			}
+			if (grid[row][col].typeOfCell() == 2 &&
+				grid[row][col + 1].typeOfCell() == 2 &&
+				grid[row][col + 2].typeOfCell() == 2 &&
+				grid[row + 1][col + 2].typeOfCell() == 2)
 			{
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col + 1].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == 2 &&
+				grid[row + 1][col].typeOfCell() == 2 &&
+				grid[row + 2][col].typeOfCell() == 2 &&
+				grid[row + 2][col - 1].typeOfCell() == 2))
+			{
+				return true;//fuck no
+			}
+			if (grid[row][col].typeOfCell() == 2 &&
+				grid[row + 1][col].typeOfCell() == 2 &&
+				grid[row + 2][col].typeOfCell() == 2 &&
+				grid[row + 2][col + 1].typeOfCell() == 2) //fuck no
 			{
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2))
+			if (grid[row][col].typeOfCell() == 2 &&
+				grid[row + 1][col].typeOfCell() == 2 &&
+				grid[row + 2][col].typeOfCell() == 2 &&
+				grid[row][col - 1].typeOfCell() == 2) //fuck no
+			{
+				return true;
+			}
+			if (grid[row][col].typeOfCell() == 2 &&
+				grid[row + 1][col].typeOfCell() == 2 &&
+				grid[row + 2][col].typeOfCell() == 2 &&
+				grid[row][col + 1].typeOfCell() == 2) //fuck no
 			{
 				return true;
 			}
 		}
 	}
-	
+	return false;
 }
-
 void Game::clearCurrent()
 {
 
@@ -264,6 +318,6 @@ void Game::clearCurrent()
 	}
 	
 	currentPLayernum = 3;
-	maxPlayernum = 0;
+				maxPlayernum = 0;
 }
 
