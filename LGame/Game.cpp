@@ -74,23 +74,28 @@ void Game::processEvents()
 		{
 			if (sf::Mouse::Left == newEvent.mouseButton.button)
 			{
-				
-				
-					if (newEvent.mouseButton.x < 400 &&  grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0))
+				if (newEvent.mouseButton.x < 400 && grid[newEvent.mouseButton.y / 100][newEvent.mouseButton.x / 100].typeOfCell() == (0))
+				{
+					if (m_player == 2 || m_player == 3)
 					{
 						if (validateMovement())
 						{
-
 							changeGridData(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
 						}
 					}
-				
+				}
+				if (m_player == 1)
+				{
+					coinSelected(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+				}
 			}
-			if (sf::Mouse::Right == newEvent.mouseButton.button)
+			if (m_player == 2 || m_player == 3)
 			{
-				clearCurrent();
+				if (sf::Mouse::Right == newEvent.mouseButton.button)
+				{
+					clearCurrent();
+				}
 			}
-
 		}
 	}
 }
@@ -114,7 +119,6 @@ void Game::processKeys(sf::Event t_event)
 /// <param name="t_deltaTime">time interval per frame</param>
 void Game::update(sf::Time t_deltaTime)
 {
-	tempCheck();
 	if (m_exitGame)
 	{
 		m_window.close();
@@ -159,17 +163,47 @@ void Game::setupFontAndText()
 
 }
 
-void Game::tempCheck()
+void Game::coinMoves()
 {
-	for (int i = 0; i < 4; i++)
+	/*if (m_coinTurn)
 	{
-		for (int j = 0; j < 4; j++)
+		if (coinSelected())
 		{
-			
+			for (int row = 0; row < numRows; row++)
+			{
+				for (int col = 0; col < numCols; col++)
+				{
+					if (grid[row][col].typeOfCell() == 0)
+					{
+						grid[row][col].setDataType(1);
+						changeGridData(col, row);
+					}
+
+					if (grid[row][col].typeOfCell() == 5)
+					{
+						grid[row][col].setDataType(0);
+					}
+				}
+			}
 		}
-	}
+	}*/
 }
 
+bool Game::coinSelected(int t_col, int t_row)
+{
+	if (grid[t_row][t_col].typeOfCell() == 1)
+	{
+		if (!m_coinSelected)
+		{
+			grid[t_row][t_col].setDataType(4);
+			grid[t_row][t_col].setUpBoxColor();
+			m_coinSelected = true;
+			return true;
+		}
+	}
+
+	return false;
+}
 
 void Game::setupGrid()
 // Initialize the game objects to play a new game
@@ -197,8 +231,8 @@ void Game::setupGrid()
 
 void Game::changeGridData(int t_col, int t_row)
 {
-				grid[t_row][t_col].setDataType(2);
-				grid[t_row][t_col].setup();
+	grid[t_row][t_col].setDataType(m_player);
+	grid[t_row][t_col].setup();
 }
 
 bool Game::validateMovement()
@@ -219,38 +253,70 @@ bool Game::validateMovement()
 				return false;
 				
 			}
-			if ((grid[row + 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 || grid[row- 1][col].typeOfCell() == 2 && grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2))
+			if ((grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row][col].typeOfCell() == m_player && 
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player ||
+				grid[row- 1][col].typeOfCell() == m_player &&
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player))
 			{
+				m_coinTurn = true;
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row- 1][col + 2].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2 && grid[row][col + 2].typeOfCell() == 2 && grid[row+ 1][col + 2].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player &&
+				grid[row- 1][col + 2].typeOfCell() == m_player ||
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player &&
+				grid[row+ 1][col + 2].typeOfCell() == m_player))
 			{
+				m_coinTurn = true;
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row+ 2][col + 1].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == m_player && 
+				grid[row+ 1][col].typeOfCell() == m_player &&
+				grid[row+ 2][col].typeOfCell() == m_player && 
+				grid[row+ 2][col - 1].typeOfCell() == m_player ||
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row+ 1][col].typeOfCell() == m_player &&
+				grid[row+ 2][col].typeOfCell() == m_player &&
+				grid[row+ 2][col + 1].typeOfCell() == m_player))
 			{
+				m_coinTurn = true;
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col - 1].typeOfCell() == 2 || grid[row][col].typeOfCell() == 2 && grid[row+ 1][col].typeOfCell() == 2 && grid[row+ 2][col].typeOfCell() == 2 && grid[row][col + 1].typeOfCell() == 2))
+			if ((grid[row][col].typeOfCell() == m_player &&
+				grid[row+ 1][col].typeOfCell() == m_player &&
+				grid[row+ 2][col].typeOfCell() == m_player &&
+				grid[row][col - 1].typeOfCell() == m_player ||
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row+ 1][col].typeOfCell() == m_player &&
+				grid[row+ 2][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player))
 			{
+				m_coinTurn = true;
 				return true;
 			}
 		}
 	}
-	
 }
 
+// Clears the players L off the board
 void Game::clearCurrent()
 {
-
 	for (int row = 0; row < numRows; row++)
 	{
 		for (int col = 0; col < numCols; col++)
 		{
-			if (grid[row][col].typeOfCell() == 2 && currentPLayernum >= 0)
+
+			if (grid[row][col].typeOfCell() == m_player && currentPLayernum >= 0)
 			{
 				currentPLayernum--;
 
