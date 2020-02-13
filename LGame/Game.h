@@ -31,8 +31,8 @@ private:
 	void setupFontAndText();
 
 	// Handles coin validation
-	void coinMoves();
-	bool coinSelected(int t_col, int t_row);
+	void coinMoves(int t_col, int t_row);
+	bool coinSelection(int t_col, int t_row);
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -47,6 +47,9 @@ private:
 
 	// Checks if a coin is selected
 	bool m_coinSelected = false;
+
+	int tempRow;
+	int tempCol;
 
 	//grid setup
 	static const int numRows = 4;
