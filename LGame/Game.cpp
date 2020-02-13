@@ -85,7 +85,8 @@ void Game::processEvents()
 							{
 								m_turnythingy.setString("Valid Move switching turns!");
 								std::cout << "Valid you invalid" << std::endl;
-
+								m_tempPlayer = m_player;
+								m_player = 1;
 							}
 							else 
 							{
@@ -93,7 +94,6 @@ void Game::processEvents()
 								{
 									m_turnythingy.setString("Invalid ! right click to reset");
 									std::cout << "Invalid ! right click to reset" << std::endl;
-									m_player = 1;
 								}
 							}
 						}
@@ -104,8 +104,8 @@ void Game::processEvents()
 					if (!m_coinSelected)
 					{
 						coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
-						tempRow = newEvent.mouseButton.y / 100;
-						tempCol = newEvent.mouseButton.x / 100;
+						m_tempRow = newEvent.mouseButton.y / 100;
+						m_tempCol = newEvent.mouseButton.x / 100;
 					}
 					else
 					{
@@ -212,13 +212,22 @@ void Game::coinMoves(int t_col, int t_row)
 				grid[t_row][t_col].setUpBoxColor();
 			}
 
-			if (grid[tempRow][tempCol].typeOfCell() == 4)
+			if (grid[m_tempRow][m_tempCol].typeOfCell() == 4)
 			{
 				if (m_coinSelected)
 				{
-					grid[tempRow][tempCol].setDataType(0);
-					grid[tempRow][tempCol].setUpBoxColor();
+					grid[m_tempRow][m_tempCol].setDataType(0);
+					grid[m_tempRow][m_tempCol].setUpBoxColor();
 					m_coinSelected = false;
+
+					if (m_tempPlayer == 3)
+					{
+						m_player = 2;
+					}
+					else
+					{
+						m_player = 3;
+					}
 				}
 			}
 		}
@@ -282,65 +291,65 @@ bool Game::validateMovement()
 
 			//its somewhat worken
 
-			if ((grid[row + 1][col].typeOfCell() == 2 &&
-				grid[row][col].typeOfCell() == 2 &&
-				grid[row][col + 1].typeOfCell() == 2 &&
-				grid[row][col + 2].typeOfCell() == 2))
+			if (grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player)
 			{
 
 
 				return true; //fuck no
 			}
-			if (grid[row - 1][col].typeOfCell() == 2 &&
-				grid[row][col].typeOfCell() == 2 &&
-				grid[row][col + 1].typeOfCell() == 2 &&
-				grid[row][col + 2].typeOfCell() == 2)
+			if (grid[row - 1][col].typeOfCell() == m_player &&
+				grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player)
 			{
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 &&
-				grid[row][col + 1].typeOfCell() == 2 &&
-				grid[row][col + 2].typeOfCell() == 2 &&
-				grid[row - 1][col + 2].typeOfCell() == 2))
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player &&
+				grid[row - 1][col + 2].typeOfCell() == m_player)
 
 			{
 				return true;
 			}
-			if (grid[row][col].typeOfCell() == 2 &&
-				grid[row][col + 1].typeOfCell() == 2 &&
-				grid[row][col + 2].typeOfCell() == 2 &&
-				grid[row + 1][col + 2].typeOfCell() == 2)
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player &&
+				grid[row][col + 2].typeOfCell() == m_player &&
+				grid[row + 1][col + 2].typeOfCell() == m_player)
 			{
 				return true;
 			}
 
-			if ((grid[row][col].typeOfCell() == 2 &&
-				grid[row + 1][col].typeOfCell() == 2 &&
-				grid[row + 2][col].typeOfCell() == 2 &&
-				grid[row + 2][col - 1].typeOfCell() == 2))
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row + 2][col].typeOfCell() == m_player &&
+				grid[row + 2][col - 1].typeOfCell() == m_player)
 			{
 				return true;//fuck no
 			}
-			if (grid[row][col].typeOfCell() == 2 &&
-				grid[row + 1][col].typeOfCell() == 2 &&
-				grid[row + 2][col].typeOfCell() == 2 &&
-				grid[row + 2][col + 1].typeOfCell() == 2) //fuck no
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row + 2][col].typeOfCell() == m_player &&
+				grid[row + 2][col + 1].typeOfCell() == m_player) //fuck no
 			{
 				return true;
 			}
 
-			if (grid[row][col].typeOfCell() == 2 &&
-				grid[row + 1][col].typeOfCell() == 2 &&
-				grid[row + 2][col].typeOfCell() == 2 &&
-				grid[row][col - 1].typeOfCell() == 2) //fuck no
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row + 2][col].typeOfCell() == m_player &&
+				grid[row][col - 1].typeOfCell() == m_player) //fuck no
 			{
 				return true;
 			}
-			if (grid[row][col].typeOfCell() == 2 &&
-				grid[row + 1][col].typeOfCell() == 2 &&
-				grid[row + 2][col].typeOfCell() == 2 &&
-				grid[row][col + 1].typeOfCell() == 2) //fuck no
+			if (grid[row][col].typeOfCell() == m_player &&
+				grid[row + 1][col].typeOfCell() == m_player &&
+				grid[row + 2][col].typeOfCell() == m_player &&
+				grid[row][col + 1].typeOfCell() == m_player) //fuck no
 			{
 				return true;
 			}

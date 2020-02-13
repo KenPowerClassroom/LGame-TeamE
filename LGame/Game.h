@@ -18,7 +18,7 @@ public:
 	/// </summary>
 	void run();
 
-private:
+
 	//functiones
 	void processEvents();
 	void processKeys(sf::Event t_event);
@@ -26,14 +26,19 @@ private:
 	void render();
 	void setupGrid();
 	void changeGridData(int t_col, int t_row);
-     bool validateMovement();
-	 void clearCurrent();
+    bool validateMovement();
+	void clearCurrent();
 	void setupFontAndText();
+	bool numberCheck();
 
 	// Handles coin validation
 	void coinMoves(int t_col, int t_row);
 	bool coinSelection(int t_col, int t_row);
 
+	int m_tempRow;
+	int m_tempCol;
+
+private:
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
@@ -48,9 +53,6 @@ private:
 	// Checks if a coin is selected
 	bool m_coinSelected = false;
 
-	int tempRow;
-	int tempCol;
-
 	//grid setup
 	static const int numRows = 4;
 	static const int numCols = 4;
@@ -61,8 +63,9 @@ private:
 	int data[numRows][numCols] = { 0 };
 	int currentPLayernum = 3;
 	int m_player = 2;
+	int m_tempPlayer;
 	sf::RectangleShape block;
-	bool numberCheck();
+	
 	sf::Text m_turnythingy;
 };
 

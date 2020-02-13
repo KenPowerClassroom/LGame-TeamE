@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "..//LGame/Cell.h"
-
+#include "..//LGame/Game.h"
 
 #ifdef _DEBUG 
 #pragma comment(lib,"sfml-graphics-d.lib") 
@@ -16,7 +16,42 @@
 #pragma comment(lib,"sfml-network.lib") 
 #endif 
 
-TEST(TestCaseName, TestName) {
+TEST()
+{
+	int levelData[4][4] = {
+		{1,2,2,0},
+		{0,2,3,0},
+		{0,2,3,0},
+		{0,3,3,1},
+	};
+
+	Cell selectedCell[4][4];
+	Game game;
+	bool m_coinSelected = false;
+	sf::Event newEvent;
+
+	if (sf::Event::MouseButtonPressed == newEvent.type)
+	{
+		if (sf::Mouse::Left == newEvent.mouseButton.button)
+		{
+			if (!m_coinSelected)
+			{
+				game.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+				game.m_tempRow = newEvent.mouseButton.y / 100;
+				game.m_tempCol = newEvent.mouseButton.x / 100;
+			}
+			else
+			{
+				game.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+			}
+		}
+	}	
+
+	EXPECT_EQ(selectedCell[0][3].typeOfCell(), 1);
+}
+
+TEST(TestCaseName, TestName) 
+{
 	int levelData[4][4] = {
 		{1,2,2,0},
 		{0,2,3,0},

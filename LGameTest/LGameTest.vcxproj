@@ -71,7 +71,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>../LGame/debug;C:\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Cell.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Cell.obj;Game.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
