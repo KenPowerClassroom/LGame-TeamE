@@ -101,15 +101,24 @@ void Game::processEvents()
 				}
 				if (m_player == 1)
 				{
-					if (!m_coinSelected)
+					if (!coin.m_coinSelected)
 					{
-						coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+						coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, grid);
 						m_tempRow = newEvent.mouseButton.y / 100;
 						m_tempCol = newEvent.mouseButton.x / 100;
 					}
 					else
 					{
-						coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+						coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, m_tempRow, m_tempCol, grid);
+						
+						if (m_tempPlayer == 3) // Move to Game
+						{
+							m_player = 2;
+						}
+						else
+						{
+							m_player = 3;
+						}
 					}
 				}
 			}
@@ -200,55 +209,9 @@ bool Game::numberCheck()
 	}
 }
 
-void Game::coinMoves(int t_col, int t_row)
-{
-	if (m_coinSelected)
-	{
-		if (grid[t_row][t_col].typeOfCell() == 0)
-		{
-			if (m_coinSelected)
-			{
-				grid[t_row][t_col].setDataType(1);
-				grid[t_row][t_col].setUpBoxColor();
-			}
 
-			if (grid[m_tempRow][m_tempCol].typeOfCell() == 4)
-			{
-				if (m_coinSelected)
-				{
-					grid[m_tempRow][m_tempCol].setDataType(0);
-					grid[m_tempRow][m_tempCol].setUpBoxColor();
-					m_coinSelected = false;
 
-					if (m_tempPlayer == 3)
-					{
-						m_player = 2;
-					}
-					else
-					{
-						m_player = 3;
-					}
-				}
-			}
-		}
-	}
-}
 
-bool Game::coinSelection(int t_col, int t_row)
-{
-	if (grid[t_row][t_col].typeOfCell() == 1)
-	{
-		if (!m_coinSelected)
-		{
-			grid[t_row][t_col].setDataType(4);
-			grid[t_row][t_col].setUpBoxColor();
-			m_coinSelected = true;
-			return true;
-		}
-	}
-
-	return false;
-}
 
 
 
