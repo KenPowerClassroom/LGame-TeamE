@@ -52,12 +52,24 @@ void Cell::setUpBoxColor()
 	{
 		box.setFillColor(sf::Color::Green);
 	}
+
+
 }
 
 void Cell::setBoardPosition(int t_x, int t_y)
 {
 	index.x = t_x;
 	index.y = t_y;
+}
+
+bool Cell::getPreviousSelected()
+{
+	return previouslySelected;
+}
+
+void Cell::setPreviouslySelected(bool t_help)
+{
+	previouslySelected = t_help;
 }
 
 sf::RectangleShape Cell::getBox()

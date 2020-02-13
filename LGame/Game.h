@@ -30,14 +30,14 @@ public:
 	void clearCurrent();
 	void setupFontAndText();
 	bool numberCheck();
-
+	
 	// Handles coin validation
 	void coinMoves(int t_col, int t_row);
 	bool coinSelection(int t_col, int t_row);
 
 	int m_tempRow;
 	int m_tempCol;
-
+	
 private:
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -64,6 +64,8 @@ private:
 	int currentPLayernum = 3;
 	int m_player = 2;
 	int m_tempPlayer;
+	int samePosTracker = 0;
+
 	sf::RectangleShape block;
 	
 	sf::Text m_turnythingy;

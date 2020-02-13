@@ -81,7 +81,7 @@ void Game::processEvents()
 						{
 							changeGridData(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
 
-							if (validateMovement())
+							if (validateMovement()&& samePosTracker != 4)
 							{
 								m_turnythingy.setString("Valid Move switching turns!");
 								std::cout << "Valid you invalid" << std::endl;
@@ -118,6 +118,7 @@ void Game::processEvents()
 				if (sf::Mouse::Right == newEvent.mouseButton.button)
 				{
 					clearCurrent();
+					samePosTracker = 0;
 				}
 			}
 		}
@@ -278,6 +279,10 @@ void Game::setupGrid()
 
 void Game::changeGridData(int t_col, int t_row)
 {
+	if (grid[t_row][t_col].getPreviousSelected())
+	{
+		samePosTracker++;
+	}
 	grid[t_row][t_col].setDataType(m_player);
 	grid[t_row][t_col].setup();
 }
@@ -288,73 +293,102 @@ bool Game::validateMovement()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
+			
 
-			//its somewhat worken
+			
+					
 
-			if (grid[row + 1][col].typeOfCell() == m_player &&
-				grid[row][col].typeOfCell() == m_player &&
-				grid[row][col + 1].typeOfCell() == m_player &&
-				grid[row][col + 2].typeOfCell() == m_player)
-			{
+			
+				//its somewhat worken
+				if (!(row + 1 > 3 || col + 1 > 3 || col + 2 > 3))
+				{
+					if (grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player)
+					{
 
 
-				return true; //fuck no
-			}
-			if (grid[row - 1][col].typeOfCell() == m_player &&
-				grid[row][col].typeOfCell() == m_player &&
-				grid[row][col + 1].typeOfCell() == m_player &&
-				grid[row][col + 2].typeOfCell() == m_player)
-			{
-				return true;
-			}
+						return true; //fuck no
+					}
+				}
+				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
+				{
+					if (grid[row - 1][col].typeOfCell() == m_player &&
+						grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player)
+					{
+						return true;
+					}
+				}
+				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
+				{
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player &&
+						grid[row - 1][col + 2].typeOfCell() == m_player)
 
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row][col + 1].typeOfCell() == m_player &&
-				grid[row][col + 2].typeOfCell() == m_player &&
-				grid[row - 1][col + 2].typeOfCell() == m_player)
+					{
+						return true;
+					}
+				}
+				if (!(row + 1 < 0 || col + 1 > 3 || col + 2 > 3))
+				{
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player &&
+						grid[row + 1][col + 2].typeOfCell() == m_player)
+					{
+						return true;
+					}
+				}
+				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
+				{
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row + 2][col - 1].typeOfCell() == m_player)
+					{
+						return true;//fuck no
+					}
+				}
+				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
+				{
 
-			{
-				return true;
-			}
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row][col + 1].typeOfCell() == m_player &&
-				grid[row][col + 2].typeOfCell() == m_player &&
-				grid[row + 1][col + 2].typeOfCell() == m_player)
-			{
-				return true;
-			}
-
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row + 1][col].typeOfCell() == m_player &&
-				grid[row + 2][col].typeOfCell() == m_player &&
-				grid[row + 2][col - 1].typeOfCell() == m_player)
-			{
-				return true;//fuck no
-			}
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row + 1][col].typeOfCell() == m_player &&
-				grid[row + 2][col].typeOfCell() == m_player &&
-				grid[row + 2][col + 1].typeOfCell() == m_player) //fuck no
-			{
-				return true;
-			}
-
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row + 1][col].typeOfCell() == m_player &&
-				grid[row + 2][col].typeOfCell() == m_player &&
-				grid[row][col - 1].typeOfCell() == m_player) //fuck no
-			{
-				return true;
-			}
-			if (grid[row][col].typeOfCell() == m_player &&
-				grid[row + 1][col].typeOfCell() == m_player &&
-				grid[row + 2][col].typeOfCell() == m_player &&
-				grid[row][col + 1].typeOfCell() == m_player) //fuck no
-			{
-				return true;
+					if ((grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row + 2][col + 1].typeOfCell() == m_player)) //fuck no
+					{
+						return true;
+					}
+				}
+				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
+				{
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row][col - 1].typeOfCell() == m_player) //fuck no
+					{
+						return true;
+					}
+				}
+				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
+				{
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player) //fuck no
+					{
+						return true;
+					}
+				}
+				
 			}
 		}
-	}
+	
+	
 	return false;
 }
 
@@ -369,6 +403,8 @@ void Game::clearCurrent()
 
 			if (grid[row][col].typeOfCell() == m_player && currentPLayernum >= 0)
 			{
+				grid[row][col].setPreviouslySelected(true);
+
 				currentPLayernum--;
 
 				grid[row][col].setDataType(0);
@@ -381,6 +417,7 @@ void Game::clearCurrent()
 	}
 	
 	currentPLayernum = 3;
-				maxPlayernum = 0;
+	maxPlayernum = 0;
+	
 }
 
