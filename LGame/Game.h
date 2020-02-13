@@ -29,7 +29,10 @@ private:
      bool validateMovement();
 	 void clearCurrent();
 	void setupFontAndText();
-	
+
+	// Handles coin validation
+	void coinMoves(int t_col, int t_row);
+	bool coinSelection(int t_col, int t_row);
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -38,21 +41,29 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 	bool m_clickedOver;
+
+	// Checking if L is placed
+	bool m_coinTurn = false;
+
+	// Checks if a coin is selected
+	bool m_coinSelected = false;
+
+	int tempRow;
+	int tempCol;
+
 	//grid setup
 	static const int numRows = 4;
 	static const int numCols = 4;
 	const int cellSize = 100;
 	const int MAX_CELLS = 16;
-	int maxPlayernum =4;
+	int maxPlayernum = 4;
 	Cell grid[numRows][numCols]; //2d array to create the maze
 	int data[numRows][numCols] = { 0 };
 	int currentPLayernum = 3;
 	int m_player = 2;
 	sf::RectangleShape block;
-
 	bool numberCheck();
 	sf::Text m_turnythingy;
-
 };
 
 #endif // !GAME_HPP
