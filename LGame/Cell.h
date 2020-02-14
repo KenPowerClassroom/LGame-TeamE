@@ -7,7 +7,7 @@ class Cell
 	private:
 	int typeOfCellData;//0 could represent an empty cell, 1 a coin and 2 a tetro.
 	sf::Vector2f index;//index is the cell's position in the array
-	bool previouslySelected;
+	bool previouslySelected{false};
 
 
 

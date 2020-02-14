@@ -6,6 +6,7 @@ Cell::Cell()
 	box.setFillColor(sf::Color::White);
 	box.setOutlineColor(sf::Color::Green);
 	box.setOutlineThickness(2);
+	setPreviouslySelected(false) ;
 }
 
 void Cell::setup()
@@ -58,6 +59,7 @@ void Cell::setUpBoxColor()
 
 void Cell::setBoardPosition(int t_x, int t_y)
 {
+	
 	index.x = t_x;
 	index.y = t_y;
 }

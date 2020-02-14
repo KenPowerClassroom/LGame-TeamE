@@ -30,7 +30,7 @@ public:
 	void clearCurrent();
 	void setupFontAndText();
 	bool numberCheck();
-	
+	void checkForClicks(int t_col,int t_row);
 	// Handles coin validation
 	void coinMoves(int t_col, int t_row);
 	bool coinSelection(int t_col, int t_row);
@@ -70,6 +70,5 @@ private:
 	
 	sf::Text m_turnythingy;
 };
-
 #endif // !GAME_HPP
 
