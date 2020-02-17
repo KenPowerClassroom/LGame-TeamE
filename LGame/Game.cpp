@@ -204,7 +204,7 @@ bool Game::numberCheck()
 
 void Game::checkForClicks(int t_col,int t_row)
 {
-	if (grid[t_row][t_col].getPreviousSelected())
+	if (data[t_row][t_col] == m_player)
 	{
 		samePosTracker++;
 	}
@@ -411,13 +411,8 @@ bool Game::validateMovement()
 						}
 					}
 				}
-				
-					
-				
 		}
 	}
-	
-	
 	return false;
 }
 
@@ -429,18 +424,11 @@ void Game::clearCurrent()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
-
 			if (grid[row][col].typeOfCell() == m_player && (currentPLayernum > -1))
 			{
-				
-				grid[row][col].setPreviouslySelected(true);
 				currentPLayernum--;
-
 				grid[row][col].setDataType(0);
-				
-				
 				grid[row][col].setup();
-				
 			}
 			else
 			{
@@ -448,9 +436,8 @@ void Game::clearCurrent()
 			}
 		}
 	}
-	
 	currentPLayernum = 3;
 	maxPlayernum = 0;
-	
+	samePosTracker = 0;
 }
 
