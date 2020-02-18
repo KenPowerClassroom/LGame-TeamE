@@ -102,6 +102,8 @@ void Game::processEvents()
 				}
 				if (m_player == 1)
 				{
+					
+
 					if (!m_coinSelected)
 					{
 						coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
@@ -116,6 +118,7 @@ void Game::processEvents()
 			}
 			if (m_player == 2 || m_player == 3)
 			{
+				pleaseOhGodWork();
 				if (sf::Mouse::Right == newEvent.mouseButton.button)
 				{
 					clearCurrent();
@@ -233,12 +236,10 @@ void Game::coinMoves(int t_col, int t_row)
 					if (m_tempPlayer == 3)
 					{
 						m_player = 2;
-						pleaseOhGodWork();
 					}
 					else
 					{
 						m_player = 3;
-						pleaseOhGodWork();
 					}
 				}
 			}
@@ -277,6 +278,10 @@ void Game::pleaseOhGodWork()
 					oldPos[help].y = row;
 
 					help++;
+				}
+				else
+				{
+					help = 0;
 				}
 			}
 		}
@@ -453,6 +458,7 @@ bool Game::validateMovement()
 		}
 	}
 	currentPLayernum = 3;
+	help = 0;
 
 	return false;
 }
@@ -467,8 +473,6 @@ void Game::clearCurrent()
 		{
 			if (grid[row][col].typeOfCell() == m_player && (currentPLayernum > -1))
 			{
-				
-
 				currentPLayernum--;
 				grid[row][col].setDataType(0);
 				grid[row][col].setup();
