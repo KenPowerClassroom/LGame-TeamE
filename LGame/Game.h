@@ -34,7 +34,7 @@ public:
 	// Handles coin validation
 	void coinMoves(int t_col, int t_row);
 	bool coinSelection(int t_col, int t_row);
-
+	void pleaseOhGodWork();
 	int m_tempRow;
 	int m_tempCol;
 	
@@ -65,7 +65,8 @@ private:
 	int m_player = 2;
 	int m_tempPlayer;
 	int samePosTracker = 0;
-
+	sf::Vector2i oldPos[4];
+	int help = 0;
 	sf::RectangleShape block;
 	
 	sf::Text m_turnythingy;

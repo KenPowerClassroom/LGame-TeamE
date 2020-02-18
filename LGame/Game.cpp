@@ -204,7 +204,7 @@ bool Game::numberCheck()
 
 void Game::checkForClicks(int t_col,int t_row)
 {
-	if (data[t_row][t_col] == m_player)
+	if (oldPos[help].x == t_col && oldPos[help].y == t_row)
 	{
 		samePosTracker++;
 	}
@@ -233,10 +233,12 @@ void Game::coinMoves(int t_col, int t_row)
 					if (m_tempPlayer == 3)
 					{
 						m_player = 2;
+						pleaseOhGodWork();
 					}
 					else
 					{
 						m_player = 3;
+						pleaseOhGodWork();
 					}
 				}
 			}
@@ -258,6 +260,29 @@ bool Game::coinSelection(int t_col, int t_row)
 	}
 
 	return false;
+}
+
+void Game::pleaseOhGodWork()
+{
+	for (int row = 0; row < numRows; row++)
+	{
+		for (int col = 0; col < numCols; col++)
+		{
+
+			if (grid[row][col].typeOfCell() == m_player)
+			{
+				if (help < 4)
+				{
+					oldPos[help].x = col;
+					oldPos[help].y = row;
+
+					help++;
+				}
+			}
+		}
+
+	}
+
 }
 
 
@@ -284,6 +309,7 @@ void Game::setupGrid()
 			grid[row][col].setup();
 		}
 	}
+	pleaseOhGodWork();
 }
 
 void Game::changeGridData(int t_col, int t_row)
@@ -299,120 +325,135 @@ bool Game::validateMovement()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
-			if (samePosTracker == 3)
+			
+			if (samePosTracker != 3)
 			{
-				return false;
-			}
-				//its somewhat worken
 				if (!(row + 1 > 3 || col + 1 > 3 || col + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player)
 					{
-						if (grid[row + 1][col].typeOfCell() == m_player &&
-							grid[row][col].typeOfCell() == m_player &&
-							grid[row][col + 1].typeOfCell() == m_player &&
-							grid[row][col + 2].typeOfCell() == m_player)
-						{
+						currentPLayernum = 3;
+						help = 0;
 
 
-							return true; //fuck no
-						}
+						return true; //fuck no
 					}
+
 				}
 				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row - 1][col].typeOfCell() == m_player &&
+						grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player)
 					{
-						if (grid[row - 1][col].typeOfCell() == m_player &&
-							grid[row][col].typeOfCell() == m_player &&
-							grid[row][col + 1].typeOfCell() == m_player &&
-							grid[row][col + 2].typeOfCell() == m_player)
-						{
-							return true;
-						}
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;
 					}
+
 				}
 				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
-					if (samePosTracker != 3)
-					{
-						if (grid[row][col].typeOfCell() == m_player &&
-							grid[row][col + 1].typeOfCell() == m_player &&
-							grid[row][col + 2].typeOfCell() == m_player &&
-							grid[row - 1][col + 2].typeOfCell() == m_player)
 
-						{
-							return true;
-						}
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player &&
+						grid[row - 1][col + 2].typeOfCell() == m_player)
+
+					{
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;
 					}
+
 				}
 				if (!(row + 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player &&
+						grid[row][col + 2].typeOfCell() == m_player &&
+						grid[row + 1][col + 2].typeOfCell() == m_player)
 					{
-						if (grid[row][col].typeOfCell() == m_player &&
-							grid[row][col + 1].typeOfCell() == m_player &&
-							grid[row][col + 2].typeOfCell() == m_player &&
-							grid[row + 1][col + 2].typeOfCell() == m_player)
-						{
-							return true;
-						}
+						currentPLayernum = 3;
+						help = 0;
+						return true;
 					}
+
 				}
 				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row + 2][col - 1].typeOfCell() == m_player)
 					{
-						if (grid[row][col].typeOfCell() == m_player &&
-							grid[row + 1][col].typeOfCell() == m_player &&
-							grid[row + 2][col].typeOfCell() == m_player &&
-							grid[row + 2][col - 1].typeOfCell() == m_player)
-						{
-							return true;//fuck no
-						}
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;//fuck no
 					}
+
 				}
 				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if ((grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row + 2][col + 1].typeOfCell() == m_player)) //fuck no
 					{
-						if ((grid[row][col].typeOfCell() == m_player &&
-							grid[row + 1][col].typeOfCell() == m_player &&
-							grid[row + 2][col].typeOfCell() == m_player &&
-							grid[row + 2][col + 1].typeOfCell() == m_player)) //fuck no
-						{
-							return true;
-						}
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;
 					}
+
 				}
 				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row][col - 1].typeOfCell() == m_player) //fuck no
 					{
-						if (grid[row][col].typeOfCell() == m_player &&
-							grid[row + 1][col].typeOfCell() == m_player &&
-							grid[row + 2][col].typeOfCell() == m_player &&
-							grid[row][col - 1].typeOfCell() == m_player) //fuck no
-						{
-							return true;
-						}
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;
 					}
+
 				}
 				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
 				{
-					if (samePosTracker != 3)
+
+					if (grid[row][col].typeOfCell() == m_player &&
+						grid[row + 1][col].typeOfCell() == m_player &&
+						grid[row + 2][col].typeOfCell() == m_player &&
+						grid[row][col + 1].typeOfCell() == m_player) //fuck no
 					{
-						if (grid[row][col].typeOfCell() == m_player &&
-							grid[row + 1][col].typeOfCell() == m_player &&
-							grid[row + 2][col].typeOfCell() == m_player &&
-							grid[row][col + 1].typeOfCell() == m_player) //fuck no
-						{
-							return true;
-						}
+						currentPLayernum = 3;
+						help = 0;
+
+						return true;
 					}
+
 				}
+			}
 		}
 	}
+	currentPLayernum = 3;
+
 	return false;
 }
 
@@ -426,18 +467,16 @@ void Game::clearCurrent()
 		{
 			if (grid[row][col].typeOfCell() == m_player && (currentPLayernum > -1))
 			{
+				
+
 				currentPLayernum--;
 				grid[row][col].setDataType(0);
 				grid[row][col].setup();
 			}
-			else
-			{
-				grid[row][col].setPreviouslySelected(false);
-			}
+			
 		}
 	}
-	currentPLayernum = 3;
 	maxPlayernum = 0;
-	samePosTracker = 0;
+	
 }
 
