@@ -7,6 +7,7 @@
 /// </summary>
 #include <SFML/Graphics.hpp>
 #include "Cell.h"
+#include "Coins.h"
 
 class Game
 {
@@ -18,6 +19,7 @@ public:
 	/// </summary>
 	void run();
 
+	Coins coin;
 
 	//functiones
 	void processEvents();
@@ -31,14 +33,15 @@ public:
 	void setupFontAndText();
 	bool numberCheck();
 	void checkForClicks(int t_col,int t_row);
-	// Handles coin validation
-	void coinMoves(int t_col, int t_row);
-	bool coinSelection(int t_col, int t_row);
+
 	void pleaseOhGodWork();
 	int m_tempRow;
 	int m_tempCol;
 	
 private:
+
+	int m_tempPlayer;
+
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
@@ -46,12 +49,6 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 	bool m_clickedOver;
-
-	// Checking if L is placed
-	bool m_coinTurn = false;
-
-	// Checks if a coin is selected
-	bool m_coinSelected = false;
 
 	//grid setup
 	static const int numRows = 4;
@@ -63,12 +60,11 @@ private:
 	int data[numRows][numCols] = { 0 };
 	int currentPLayernum = 3;
 	int m_player = 2;
-	int m_tempPlayer;
 	int samePosTracker = 0;
 	sf::Vector2i oldPos[4];
 	int help = 0;
+
 	sf::RectangleShape block;
-	
 	sf::Text m_turnythingy;
 };
 #endif // !GAME_HPP

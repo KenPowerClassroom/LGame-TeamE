@@ -89,7 +89,7 @@ void Game::processEvents()
 								m_tempPlayer = m_player;
 								m_player = 1;
 							}
-							else 
+							else
 							{
 								if (maxPlayernum == 4)
 								{
@@ -102,17 +102,24 @@ void Game::processEvents()
 				}
 				if (m_player == 1)
 				{
-					
-
-					if (!m_coinSelected)
+					if (!coin.m_coinSelected)
 					{
-						coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+						coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, grid);
 						m_tempRow = newEvent.mouseButton.y / 100;
 						m_tempCol = newEvent.mouseButton.x / 100;
 					}
 					else
 					{
-						coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+						coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, m_tempRow, m_tempCol, grid);
+
+						if (m_tempPlayer == 3) // Move to Game
+						{
+							m_player = 2;
+						}
+						else
+						{
+							m_player = 3;
+						}
 					}
 				}
 			}
@@ -122,7 +129,7 @@ void Game::processEvents()
 				if (sf::Mouse::Right == newEvent.mouseButton.button)
 				{
 					clearCurrent();
-					
+
 				}
 			}
 		}
@@ -168,7 +175,7 @@ void Game::render()
 		{
 			m_window.draw(grid[row][col].getBox());
 		}
-	}	
+	}
 	m_window.display();
 }
 
@@ -205,62 +212,12 @@ bool Game::numberCheck()
 	}
 }
 
-void Game::checkForClicks(int t_col,int t_row)
+void Game::checkForClicks(int t_col, int t_row)
 {
 	if (oldPos[help].x == t_col && oldPos[help].y == t_row)
 	{
 		samePosTracker++;
 	}
-}
-
-void Game::coinMoves(int t_col, int t_row)
-{
-	if (m_coinSelected)
-	{
-		if (grid[t_row][t_col].typeOfCell() == 0)
-		{
-			if (m_coinSelected)
-			{
-				grid[t_row][t_col].setDataType(1);
-				grid[t_row][t_col].setUpBoxColor();
-			}
-
-			if (grid[m_tempRow][m_tempCol].typeOfCell() == 4)
-			{
-				if (m_coinSelected)
-				{
-					grid[m_tempRow][m_tempCol].setDataType(0);
-					grid[m_tempRow][m_tempCol].setUpBoxColor();
-					m_coinSelected = false;
-
-					if (m_tempPlayer == 3)
-					{
-						m_player = 2;
-					}
-					else
-					{
-						m_player = 3;
-					}
-				}
-			}
-		}
-	}
-}
-
-bool Game::coinSelection(int t_col, int t_row)
-{
-	if (grid[t_row][t_col].typeOfCell() == 1)
-	{
-		if (!m_coinSelected)
-		{
-			grid[t_row][t_col].setDataType(4);
-			grid[t_row][t_col].setUpBoxColor();
-			m_coinSelected = true;
-			return true;
-		}
-	}
-
-	return false;
 }
 
 void Game::pleaseOhGodWork()
@@ -319,7 +276,7 @@ void Game::setupGrid()
 
 void Game::changeGridData(int t_col, int t_row)
 {
-	
+
 	grid[t_row][t_col].setDataType(m_player);
 	grid[t_row][t_col].setup();
 }
@@ -330,7 +287,7 @@ bool Game::validateMovement()
 	{
 		for (int col = 0; col < numCols; col++)
 		{
-			
+
 			if (samePosTracker != 3)
 			{
 				if (!(row + 1 > 3 || col + 1 > 3 || col + 2 > 3))
@@ -477,10 +434,9 @@ void Game::clearCurrent()
 				grid[row][col].setDataType(0);
 				grid[row][col].setup();
 			}
-			
+
 		}
 	}
 	maxPlayernum = 0;
-	
-}
 
+}

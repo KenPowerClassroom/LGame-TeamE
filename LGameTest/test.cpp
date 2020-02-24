@@ -27,6 +27,7 @@ TEST()
 
 	Cell selectedCell[4][4];
 	Game game;
+	Coins coin;
 	bool m_coinSelected = false;
 	sf::Event newEvent;
 
@@ -36,13 +37,13 @@ TEST()
 		{
 			if (!m_coinSelected)
 			{
-				game.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+				coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, game.grid);
 				game.m_tempRow = newEvent.mouseButton.y / 100;
 				game.m_tempCol = newEvent.mouseButton.x / 100;
 			}
 			else
 			{
-				game.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
+				coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100,  game.m_player, game.m_tempRow, game.m_tempCol, game.grid);
 			}
 		}
 	}	
