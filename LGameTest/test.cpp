@@ -16,40 +16,40 @@
 #pragma comment(lib,"sfml-network.lib") 
 #endif 
 
-TEST()
-{
-	int levelData[4][4] = {
-		{1,2,2,0},
-		{0,2,3,0},
-		{0,2,3,0},
-		{0,3,3,1},
-	};
-
-	Cell selectedCell[4][4];
-	Game game;
-	Coins coin;
-	bool m_coinSelected = false;
-	sf::Event newEvent;
-
-	if (sf::Event::MouseButtonPressed == newEvent.type)
-	{
-		if (sf::Mouse::Left == newEvent.mouseButton.button)
-		{
-			if (!m_coinSelected)
-			{
-				coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, game.grid);
-				game.m_tempRow = newEvent.mouseButton.y / 100;
-				game.m_tempCol = newEvent.mouseButton.x / 100;
-			}
-			else
-			{
-				coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100,  game.m_player, game.m_tempRow, game.m_tempCol, game.grid);
-			}
-		}
-	}	
-
-	EXPECT_EQ(selectedCell[0][3].typeOfCell(), 1);
-}
+//TEST()
+//{
+//	int levelData[4][4] = {
+//		{1,2,2,0},
+//		{0,2,3,0},
+//		{0,2,3,0},
+//		{0,3,3,1},
+//	};
+//
+//	Cell selectedCell[4][4];
+//	Game game;
+//	Coins coin;
+//	bool m_coinSelected = false;
+//	sf::Event newEvent;
+//
+//	if (sf::Event::MouseButtonPressed == newEvent.type)
+//	{
+//		if (sf::Mouse::Left == newEvent.mouseButton.button)
+//		{
+//			if (!m_coinSelected)
+//			{
+//				coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, game.grid);
+//				game.m_tempRow = newEvent.mouseButton.y / 100;
+//				game.m_tempCol = newEvent.mouseButton.x / 100;
+//			}
+//			else
+//			{
+//				coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100,  game.m_player, game.m_tempRow, game.m_tempCol, game.grid);
+//			}
+//		}
+//	}	
+//
+//	EXPECT_EQ(selectedCell[0][3].typeOfCell(), 1);
+//}
 
 TEST(TestCaseName, TestName) 
 {
