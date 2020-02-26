@@ -117,7 +117,7 @@ void Game::processEvents()
 						{
 							m_player = 2;
 							std::cout << "blue turn\n";
-							if (!validateMovement(0))
+							if (validateMovement(0))
 							{
 								std::cout << "blue moves avaible " << validMovement << std::endl;
 								validMovement = 0;
@@ -131,7 +131,7 @@ void Game::processEvents()
 						{
 							m_player = 3;
 							std::cout << "red turn\n";
-							if (!validateMovement(0))
+							if (validateMovement(0))
 							{
 								std::cout << "red moves avaible " << validMovement << std::endl;
 								validMovement = 0;
