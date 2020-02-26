@@ -82,12 +82,13 @@ void Game::processEvents()
 							checkForClicks(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
 							changeGridData(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100);
 
-							if (validateMovement())
+							if (validateMovement(m_player))
 							{
 								m_turnythingy.setString("Valid Move switching turns!");
 								std::cout << "Valid move" << std::endl;
 								m_tempPlayer = m_player;
 								m_player = 1;
+								validMovement = 0;
 							}
 							else
 							{
@@ -116,12 +117,30 @@ void Game::processEvents()
 						{
 							m_player = 2;
 							std::cout << "blue turn\n";
-
+							if (!validateMovement(0))
+							{
+								std::cout << "blue moves avaible " << validMovement << std::endl;
+								validMovement = 0;
+							}
+							else
+							{
+								std::cout << "red WINS!!!!!";
+							}
 						}
 						else
 						{
 							m_player = 3;
 							std::cout << "red turn\n";
+							if (!validateMovement(0))
+							{
+								std::cout << "red moves avaible " << validMovement << std::endl;
+								validMovement = 0;
+							}
+							else
+							{
+								
+								std::cout << "blue WINS!!!!!";
+							}
 						}
 					}
 				}
@@ -271,8 +290,9 @@ void Game::changeGridData(int t_col, int t_row)
 	grid[t_row][t_col].setup();
 }
 
-bool Game::validateMovement()
+bool Game::validateMovement(int cellType)
 {
+	bool boolean = 0;
 	for (int row = 0; row < numRows; row++)
 	{
 		for (int col = 0; col < numCols; col++)
@@ -283,121 +303,177 @@ bool Game::validateMovement()
 				if (!(row + 1 > 3 || col + 1 > 3 || col + 2 > 3))
 				{
 
-					if (grid[row + 1][col].typeOfCell() == m_player &&
-						grid[row][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player &&
-						grid[row][col + 2].typeOfCell() == m_player)
+					if (grid[row + 1][col].typeOfCell() == cellType &&
+						grid[row][col].typeOfCell() == cellType &&
+						grid[row][col + 1].typeOfCell() == cellType &&
+						grid[row][col + 2].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
-
-
-						return true; 
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							boolean = true;
+							currentPLayernum = 3;
+							positionTracker = 0;
+						}
+						
 					}
 
 				}
 				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
 
-					if (grid[row - 1][col].typeOfCell() == m_player &&
-						grid[row][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player &&
-						grid[row][col + 2].typeOfCell() == m_player)
+					if (grid[row - 1][col].typeOfCell() == cellType &&
+						grid[row][col].typeOfCell() == cellType &&
+						grid[row][col + 1].typeOfCell() == cellType &&
+						grid[row][col + 2].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;	
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
 				if (!(row - 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
 
-					if (grid[row][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player &&
-						grid[row][col + 2].typeOfCell() == m_player &&
-						grid[row - 1][col + 2].typeOfCell() == m_player)
+					if (grid[row][col].typeOfCell() == cellType &&
+						grid[row][col + 1].typeOfCell() == cellType &&
+						grid[row][col + 2].typeOfCell() == cellType &&
+						grid[row - 1][col + 2].typeOfCell() == cellType)
 
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
 				if (!(row + 1 < 0 || col + 1 > 3 || col + 2 > 3))
 				{
 
-					if (grid[row][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player &&
-						grid[row][col + 2].typeOfCell() == m_player &&
-						grid[row + 1][col + 2].typeOfCell() == m_player)
+					if (grid[row][col].typeOfCell() == cellType &&
+						grid[row][col + 1].typeOfCell() == cellType &&
+						grid[row][col + 2].typeOfCell() == cellType &&
+						grid[row + 1][col + 2].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
-						return true;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
+
+						}
 					}
 
 				}
 				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
 				{
 
-					if (grid[row][col].typeOfCell() == m_player &&
-						grid[row + 1][col].typeOfCell() == m_player &&
-						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row + 2][col - 1].typeOfCell() == m_player)
+					if (grid[row][col].typeOfCell() == cellType &&
+						grid[row + 1][col].typeOfCell() == cellType &&
+						grid[row + 2][col].typeOfCell() == cellType &&
+						grid[row + 2][col - 1].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
 				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
 				{
 
-					if ((grid[row][col].typeOfCell() == m_player &&
-						grid[row + 1][col].typeOfCell() == m_player &&
-						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row + 2][col + 1].typeOfCell() == m_player)) 
+					if ((grid[row][col].typeOfCell() == cellType &&
+						grid[row + 1][col].typeOfCell() == cellType &&
+						grid[row + 2][col].typeOfCell() == cellType &&
+						grid[row + 2][col + 1].typeOfCell() == cellType))
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
 				if (!(col - 1 < 0 || row + 1 > 3 || row + 2 > 3))
 				{
 
-					if (grid[row][col].typeOfCell() == m_player &&
-						grid[row + 1][col].typeOfCell() == m_player &&
-						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row][col - 1].typeOfCell() == m_player)
+					if (grid[row][col].typeOfCell() == cellType &&
+						grid[row + 1][col].typeOfCell() == cellType &&
+						grid[row + 2][col].typeOfCell() == cellType &&
+						grid[row][col - 1].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
 				if (!(col + 1 > 3 || row + 1 > 3 || row + 2 > 3))
 				{
 
-					if (grid[row][col].typeOfCell() == m_player &&
-						grid[row + 1][col].typeOfCell() == m_player &&
-						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player)
+					if (grid[row][col].typeOfCell() == cellType &&
+						grid[row + 1][col].typeOfCell() == cellType &&
+						grid[row + 2][col].typeOfCell() == cellType &&
+						grid[row][col + 1].typeOfCell() == cellType)
 					{
-						currentPLayernum = 3;
-						positionTracker = 0;
+						if (cellType == 0)
+						{
+							validMovement++;
+						}
+						else
+						{
+							currentPLayernum = 3;
+							positionTracker = 0;
+							boolean = true;
 
-						return true;
+						}
 					}
 
 				}
@@ -406,8 +482,16 @@ bool Game::validateMovement()
 	}
 	currentPLayernum = 3;
 	positionTracker = 0;
-
-	return false;
+	return boolean;
+	/*if(validMovement > 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	*/
 }
 
 

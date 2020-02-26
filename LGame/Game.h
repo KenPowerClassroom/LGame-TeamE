@@ -28,7 +28,7 @@ public:
 	void render();
 	void setupGrid();
 	void changeGridData(int t_col, int t_row);
-    bool validateMovement();
+    bool validateMovement(int cellType);
 	void clearCurrent();
 	bool numberCheck();
 	void checkForClicks(int t_col,int t_row);
@@ -48,6 +48,7 @@ private:
 	sf::Sprite m_logoSprite; // sprite used for sfml logo
 	bool m_exitGame; // control exiting game
 	bool m_clickedOver;
+	int validMovement = 0;
 
 	//grid setup
 	static const int numRows = 4;
