@@ -100,29 +100,33 @@ void Game::processEvents()
 						}
 					}
 				}
-				if (m_player == 1)
+				if (m_player == 1) // Coins turn
 				{
-					if (!coin.m_coinSelected)
+					if (!coin.m_coinSelected) // If you have not selected a coin
 					{
-						coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, grid);
-						m_tempRow = newEvent.mouseButton.y / 100;
-						m_tempCol = newEvent.mouseButton.x / 100;
+						coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, grid); // See if you have selected a coin
+						m_tempRow = newEvent.mouseButton.y / 100; // Hold that position that your mouse clicked
+						m_tempCol = newEvent.mouseButton.x / 100; // Hold that position that your mouse clicked
 					}
-					else
+					else // If you have selected a coin
 					{
-						coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, m_tempRow, m_tempCol, grid);
+						coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, m_tempRow, m_tempCol, grid); // Place the coin 
 
-						if (m_tempPlayer == 3) // Move to Game
+						if (!coin.m_coinSelected) // If you have successfully placed the coin
 						{
-							m_player = 2;
-						}
-						else
-						{
-							m_player = 3;
+							if (m_tempPlayer == 3) // If RED played last
+							{
+								m_player = 2; // BLUES turn
+							}
+							else // If BLUE played last 
+							{
+								m_player = 3; // REDs turn
+							}
 						}
 					}
 				}
 			}
+
 			if (m_player == 2 || m_player == 3)
 			{
 				pleaseOhGodWork();
