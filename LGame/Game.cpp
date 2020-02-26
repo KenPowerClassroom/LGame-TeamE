@@ -11,7 +11,7 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 600, 400}, "L-Game" },
 	m_exitGame{ false } //when true game will exit
 {
-	setupFontAndText(); // load font 
+	 // load font 
 	block.setSize(sf::Vector2f(cellSize, cellSize));
 	setupGrid();
 }
@@ -85,7 +85,7 @@ void Game::processEvents()
 							if (validateMovement())
 							{
 								m_turnythingy.setString("Valid Move switching turns!");
-								std::cout << "Valid you invalid" << std::endl;
+								std::cout << "Valid move" << std::endl;
 								m_tempPlayer = m_player;
 								m_player = 1;
 							}
@@ -115,17 +115,20 @@ void Game::processEvents()
 						if (m_tempPlayer == 3) // Move to Game
 						{
 							m_player = 2;
+							std::cout << "blue turn\n";
+
 						}
 						else
 						{
 							m_player = 3;
+							std::cout << "red turn\n";
 						}
 					}
 				}
 			}
 			if (m_player == 2 || m_player == 3)
 			{
-				pleaseOhGodWork();
+				limitPlayerSquares();
 				if (sf::Mouse::Right == newEvent.mouseButton.button)
 				{
 					clearCurrent();
@@ -182,22 +185,6 @@ void Game::render()
 /// <summary>
 /// load the font and setup the text message for screen
 /// </summary>
-void Game::setupFontAndText()
-{
-	if (!m_ArialBlackfont.loadFromFile("FONTS\\ariblk.ttf"))
-	{
-		std::cout << "problem loading arial black font" << std::endl;
-	}
-	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80U);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
-	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
-
-}
 
 bool Game::numberCheck()
 {
@@ -214,13 +201,13 @@ bool Game::numberCheck()
 
 void Game::checkForClicks(int t_col, int t_row)
 {
-	if (oldPos[help].x == t_col && oldPos[help].y == t_row)
+	if (oldPos[positionTracker].x == t_col && oldPos[positionTracker].y == t_row)
 	{
 		samePosTracker++;
 	}
 }
 
-void Game::pleaseOhGodWork()
+void Game::limitPlayerSquares()
 {
 	for (int row = 0; row < numRows; row++)
 	{
@@ -229,16 +216,16 @@ void Game::pleaseOhGodWork()
 
 			if (grid[row][col].typeOfCell() == m_player)
 			{
-				if (help < 4)
+				if (positionTracker < 4)
 				{
-					oldPos[help].x = col;
-					oldPos[help].y = row;
+					oldPos[positionTracker].x = col;
+					oldPos[positionTracker].y = row;
 
-					help++;
+					positionTracker++;
 				}
 				else
 				{
-					help = 0;
+					positionTracker = 0;
 				}
 			}
 		}
@@ -252,6 +239,7 @@ void Game::pleaseOhGodWork()
 void Game::setupGrid()
 // Initialize the game objects to play a new game
 {
+
 	//level data (local)
 	int levelData[numRows][numCols] = {
 		{1,2,2,0},
@@ -271,7 +259,9 @@ void Game::setupGrid()
 			grid[row][col].setup();
 		}
 	}
-	pleaseOhGodWork();
+	limitPlayerSquares();
+	std::cout << "blue turns first\n";
+	std::cout << "right click to begin turn \n";
 }
 
 void Game::changeGridData(int t_col, int t_row)
@@ -299,10 +289,10 @@ bool Game::validateMovement()
 						grid[row][col + 2].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 
-						return true; //fuck no
+						return true; 
 					}
 
 				}
@@ -315,7 +305,7 @@ bool Game::validateMovement()
 						grid[row][col + 2].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 						return true;
 					}
@@ -331,7 +321,7 @@ bool Game::validateMovement()
 
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 						return true;
 					}
@@ -346,7 +336,7 @@ bool Game::validateMovement()
 						grid[row + 1][col + 2].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 						return true;
 					}
 
@@ -360,9 +350,9 @@ bool Game::validateMovement()
 						grid[row + 2][col - 1].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
-						return true;//fuck no
+						return true;
 					}
 
 				}
@@ -372,10 +362,10 @@ bool Game::validateMovement()
 					if ((grid[row][col].typeOfCell() == m_player &&
 						grid[row + 1][col].typeOfCell() == m_player &&
 						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row + 2][col + 1].typeOfCell() == m_player)) //fuck no
+						grid[row + 2][col + 1].typeOfCell() == m_player)) 
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 						return true;
 					}
@@ -387,10 +377,10 @@ bool Game::validateMovement()
 					if (grid[row][col].typeOfCell() == m_player &&
 						grid[row + 1][col].typeOfCell() == m_player &&
 						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row][col - 1].typeOfCell() == m_player) //fuck no
+						grid[row][col - 1].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 						return true;
 					}
@@ -402,10 +392,10 @@ bool Game::validateMovement()
 					if (grid[row][col].typeOfCell() == m_player &&
 						grid[row + 1][col].typeOfCell() == m_player &&
 						grid[row + 2][col].typeOfCell() == m_player &&
-						grid[row][col + 1].typeOfCell() == m_player) //fuck no
+						grid[row][col + 1].typeOfCell() == m_player)
 					{
 						currentPLayernum = 3;
-						help = 0;
+						positionTracker = 0;
 
 						return true;
 					}
@@ -415,7 +405,7 @@ bool Game::validateMovement()
 		}
 	}
 	currentPLayernum = 3;
-	help = 0;
+	positionTracker = 0;
 
 	return false;
 }
