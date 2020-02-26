@@ -24,8 +24,6 @@ public:
 	void setDataType(int t_type);
 	void setUpBoxColor();
 	void setBoardPosition(int t_x, int t_y);
-	bool getPreviousSelected();
-	void setPreviouslySelected(bool t_help);
 
 	sf::RectangleShape getBox();
 

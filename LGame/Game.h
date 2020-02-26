@@ -30,11 +30,10 @@ public:
 	void changeGridData(int t_col, int t_row);
     bool validateMovement();
 	void clearCurrent();
-	void setupFontAndText();
 	bool numberCheck();
 	void checkForClicks(int t_col,int t_row);
 
-	void pleaseOhGodWork();
+	void limitPlayerSquares();
 	int m_tempRow;
 	int m_tempCol;
 	
@@ -56,13 +55,15 @@ private:
 	const int cellSize = 100;
 	const int MAX_CELLS = 16;
 	int maxPlayernum = 4;
+
 	Cell grid[numRows][numCols]; //2d array to create the maze
 	int data[numRows][numCols] = { 0 };
+
 	int currentPLayernum = 3;
 	int m_player = 2;
 	int samePosTracker = 0;
 	sf::Vector2i oldPos[4];
-	int help = 0;
+	int positionTracker = 0;
 
 	sf::RectangleShape block;
 	sf::Text m_turnythingy;
