@@ -20,45 +20,25 @@ TEST(Coins, CoinSelection)
 {
 	Cell grid[4][4];
 	Coins coins;
-	grid[1][1].setDataType(1);
-	bool coinSelected = coins.coinSelection(1, 1, grid);
+	grid[0][0].setDataType(1);
+	bool coinSelected = coins.coinSelection(0, 0, grid);
 	ASSERT_TRUE(coinSelected);
 }
 
-//TEST()
-//{
-//	int levelData[4][4] = {
-//		{1,2,2,0},
-//		{0,2,3,0},
-//		{0,2,3,0},
-//		{0,3,3,1},
-//	};
-//
-//	Cell selectedCell[4][4];
-//	Game game;
-//	Coins coin;
-//	bool m_coinSelected = false;
-//	sf::Event newEvent;
-//
-//	if (sf::Event::MouseButtonPressed == newEvent.type)
-//	{
-//		if (sf::Mouse::Left == newEvent.mouseButton.button)
-//		{
-//			if (!m_coinSelected)
-//			{
-//				coin.coinSelection(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, game.grid);
-//				game.m_tempRow = newEvent.mouseButton.y / 100;
-//				game.m_tempCol = newEvent.mouseButton.x / 100;
-//			}
-//			else
-//			{
-//				coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100,  game.m_player, game.m_tempRow, game.m_tempCol, game.grid);
-//			}
-//		}
-//	}	
-//
-//	EXPECT_EQ(selectedCell[0][3].typeOfCell(), 1);
-//}
+TEST(Coins, CoinPlaced)
+{
+	Cell initial[4][4];
+	Coins coins;
+	coins.m_coinSelected = true;
+	initial[0][0].setDataType(4);
+	initial[3][0].setDataType(0);
+
+	coins.coinMoves(3, 0, 0, 0, initial);
+
+	EXPECT_EQ(initial[3][0].typeOfCell(), 1);
+
+	//ASSERT_TRUE(coinPlaced);
+}
 
 TEST(TestCaseName, TestName) 
 {

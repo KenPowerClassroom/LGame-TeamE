@@ -8,7 +8,7 @@ public:
 	Coins();
 
 	// Handles coin validation
-	void coinMoves(int t_col, int t_row, int t_tempRow, int t_tempCol, Cell grid[4][4]);
+	void coinMoves(int t_row, int t_col, int t_tempRow, int t_tempCol, Cell grid[4][4]);
 	bool coinSelection(int t_col, int t_row, Cell grid[4][4]);
 
 	// Checks if a coin is selected

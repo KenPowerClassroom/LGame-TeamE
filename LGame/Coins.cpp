@@ -4,7 +4,7 @@ Coins::Coins()
 {
 }
 
-void Coins::coinMoves(int t_col, int t_row, int t_tempRow, int t_tempCol, Cell grid[4][4])
+void Coins::coinMoves(int t_row, int t_col, int t_tempRow, int t_tempCol, Cell grid[4][4])
 {
 	if (m_coinSelected) // If the coin is selected
 	{

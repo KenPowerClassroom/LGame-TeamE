@@ -111,7 +111,7 @@ void Game::processEvents()
 					}
 					else
 					{
-						coin.coinMoves(newEvent.mouseButton.x / 100, newEvent.mouseButton.y / 100, m_tempRow, m_tempCol, grid);
+						coin.coinMoves(newEvent.mouseButton.y / 100, newEvent.mouseButton.x / 100, m_tempRow, m_tempCol, grid);
 
 						if (m_tempPlayer == 3) // Move to Game
 						{
