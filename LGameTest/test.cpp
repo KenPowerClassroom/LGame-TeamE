@@ -18,17 +18,25 @@
 
 TEST(Coins, CoinSelection)
 {
+	//Creates a grid
 	Cell grid[4][4];
+	//Creates a Coins object
 	Coins coins;
+	//Sets the cell [0][0] in the grid to 1 (making it a coin)
 	grid[0][0].setDataType(1);
+	//Checks to see if the 'Pick Up' function returns true when you try pick up a coin
 	bool coinSelected = coins.coinSelection(0, 0, grid);
+	
 	ASSERT_TRUE(coinSelected);
 }
 
 TEST(Coins, CoinPlaced)
 {
+	//Creates a grid
 	Cell initial[4][4];
+	//Creates a Coins object
 	Coins coins;
+	//Sets a bool in 'Coins' to true (meaning you are holding the coin)
 	coins.m_coinSelected = true;
 	initial[0][0].setDataType(4);
 	initial[3][0].setDataType(0);
