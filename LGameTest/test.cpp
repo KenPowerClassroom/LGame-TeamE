@@ -16,6 +16,15 @@
 #pragma comment(lib,"sfml-network.lib") 
 #endif 
 
+TEST(Coins, CoinSelection)
+{
+	Cell grid[4][4];
+	Coins coins;
+	grid[1][1].setDataType(1);
+	bool coinSelected = coins.coinSelection(1, 1, grid);
+	ASSERT_TRUE(coinSelected);
+}
+
 //TEST()
 //{
 //	int levelData[4][4] = {
